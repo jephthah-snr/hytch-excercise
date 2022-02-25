@@ -18,18 +18,39 @@ exports.getAllJobs = async (req, res, next) => {
 
 //get single Job from Db
 //  GET  /api/v1/jobs/:id
-exports.getSingleJob = (req, res, next) => {
-    res.send("get single job");
+exports.getSingleJob = async (req, res, next) => {
+    try {
+     const job = await Jobmodel.findById(req.params.id)
+
+     if (!job){
+         return res.status(400).json({status: "Failed!",
+                                        success: false})
+     }
+     res.status(200).json({
+         status: true,
+         data: job
+     });
+    } catch (err) {
+        next(err)
+    //    res.status(404).json({
+    //        data: err.data,
+    //        msg: "the requestd rosource was not found!"
+    //    })
+    }
 }
 //Add new Jobs Route
 //  GET  /api/v1/job/new
 exports.postNewJob = async (req, res, next) => {
    try {
-    const bootcamp = await Jobmodel.create(req.body)
-    // let data = req.body
+       //tried to validate email address
+    // var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+    // if(String(req.body.email).search (filter) != -1 === false){
+    //     res.status(500).send('email format not correct it requires "@"')
+    // }
+    const job = await Jobmodel.create(req.body)
     res.status(201).json({
         status: true,
-        data: bootcamp
+        data: job
     });
    } catch (err) {
       res.status(400).json({
@@ -41,10 +62,46 @@ exports.postNewJob = async (req, res, next) => {
 
 //delete jon Jobs Route
 //  GET  /api/v1/jobs/:id
-exports.deleteJob = (req, res, next) => {
-    res.send("delete");
-}
+exports.deleteJob = async (req, res, next) => {
+    try {
+        const job = await Jobmodel.findByIdAndDelete(req.params.id)
 
-exports.updateJob = (req, res, next) => {
-    res.send("update!!!!");
+        
+     if (!job){
+        return res.status(400).json({status: "Failed!",
+                                       success: false})
+    }
+
+        res.status(200 ).json({
+            status: true,
+            data: `deleted ${job.title} sucessfully.`
+        });
+       } catch (err) {
+          res.status(404).json({
+              data: err.data,
+              msg: "the requestd rosource was not found!"
+          })
+       }
+   }
+
+exports.updateJob = async(req, res, next) => {
+    try {
+        const job = await Jobmodel.findByIdAndUpdate(req.params.id)
+
+        
+     if (!job){
+        return res.status(400).json({status: "Failed!",
+                                       success: false})
+    }
+
+        res.status(200 ).json({
+            status: updated,
+            data: job
+        });
+       } catch (err) {
+          res.status(404).json({
+              data: err.data,
+              msg: "the requestd rosource was not found!"
+          })
+       }
 }

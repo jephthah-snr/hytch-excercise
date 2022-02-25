@@ -4,7 +4,7 @@ const JobSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'All jobs must have a title'],
-        unique: true,
+        unique: false,
         trim: true,
         maxlength: [70, 'job title cannot be more than 70 characters']
     },
@@ -12,7 +12,7 @@ const JobSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'All jobs must have a description'],
-        unique: true,
+        unique: false,
         trim: true,
         maxlength: [700, 'job title cannot be more than 700 characters']
     },
@@ -25,7 +25,7 @@ const JobSchema = new mongoose.Schema({
     jobType: {
         type: String,
         required: [true, 'All jobs must have a type'],
-        enum: ['part-time', 'ful;-time', 'remote']
+        enum: ['part-time', 'full-time', 'remote']
     },
     company: {
         type: String,
