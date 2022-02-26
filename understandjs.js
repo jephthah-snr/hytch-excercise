@@ -1,7 +1,11 @@
-//understanding the spread operator with res and destructuring 
+const bcrypt = require('bcryptjs');
 
 
-const [lastitem, ...rest] = { id: 1, name: 'Ben', isLoggedIn: true }
+const encrypt = async () => {
+    const salt =await bcrypt.genSalt(7);
+    const hashPassword = bcrypt.hash('hello', salt);
 
-console.log(lastitem)
-console.log(rest)
+    return hashPassword
+}
+
+console.log(encrypt())

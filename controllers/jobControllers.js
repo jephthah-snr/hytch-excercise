@@ -21,10 +21,8 @@ exports.getAllJobs = async (req, res, next) => {
 exports.getSingleJob = async (req, res, next) => {
     try {
      const job = await Jobmodel.findById(req.params.id)
-
      if (!job){
-         return res.status(400).json({status: "Failed!",
-                                        success: false})
+         return res.status(400).json({status: "Failed!", success: false})
      }
      res.status(200).json({
          status: true,
@@ -60,7 +58,7 @@ exports.postNewJob = async (req, res, next) => {
    }
 }
 
-//delete jon Jobs Route
+//delete Jobs Route
 //  GET  /api/v1/jobs/:id
 exports.deleteJob = async (req, res, next) => {
     try {

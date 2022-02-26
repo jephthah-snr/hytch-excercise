@@ -10,4 +10,16 @@
     "country": "nigeria",
     "zipcode" : "00000",
     "active" : "true"
+},
+
+{
+    "first_name": "Praise",
+    "last_name": "Akujuobi",
+    "email": "jsnr300@gmail.com",
+    "password": "jephthah",
+}
+ 
+{
+    "email": "jsnr300@gmail.com",
+    "password": "jephthah",
 }
