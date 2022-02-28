@@ -1,6 +1,8 @@
 const User = require('../models/schema/Users')
 
-
+//method: GET
+//description: Handels user login.
+//route: api/v1/auth/login
 exports.Signin = async (req, res, next) => {
     const {password, email} = req.body
 
@@ -12,6 +14,7 @@ exports.Signin = async (req, res, next) => {
     }
     var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
     if(String(email).search (filter) != -1 === false){
+        
         // return next(new ErrorResponse('please provide a valid email address', 400));
         res.status(400).json({
             msg: 'please provide a valid email address'
@@ -28,6 +31,10 @@ exports.Signin = async (req, res, next) => {
     res.status(200).send(user)
 };
 
+
+//method: POST
+//description: Handles the route for registration of new users into the databse
+//route: api/v1/auth/register
 exports.Register = async (req, res, next) => {
     try {
         const {password, password2} = req.body

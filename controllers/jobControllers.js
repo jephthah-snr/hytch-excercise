@@ -1,8 +1,9 @@
 const { default: mongoose } = require('mongoose');
 const Jobmodel = require('../models/schema/Schema')
 
-//get all Jobs Route
-//  GET  /api/v1/jobs
+//method: GET
+//description: get all job posts from database with id
+//route: api/v1/jobs/23435543543645765
 exports.getAllJobs = async (req, res, next) => {
     try {
         const data = await Jobmodel.find()
@@ -16,8 +17,9 @@ exports.getAllJobs = async (req, res, next) => {
 }
 
 
-//get single Job from Db
-//  GET  /api/v1/jobs/:id
+//method: GET
+//description: get single job from database with id
+//route: api/v1/jobs/24565464345
 exports.getSingleJob = async (req, res, next) => {
     try {
      const job = await Jobmodel.findById(req.params.id)
@@ -29,6 +31,7 @@ exports.getSingleJob = async (req, res, next) => {
          data: job
      });
     } catch (err) {
+        //nect() handles the error with custom error handlers
         next(err)
     //    res.status(404).json({
     //        data: err.data,
@@ -36,15 +39,11 @@ exports.getSingleJob = async (req, res, next) => {
     //    })
     }
 }
-//Add new Jobs Route
-//  GET  /api/v1/job/new
+//method: POST
+//description: add new job to databse
+//route: api/v1/job/new
 exports.postNewJob = async (req, res, next) => {
    try {
-       //tried to validate email address
-    // var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-    // if(String(req.body.email).search (filter) != -1 === false){
-    //     res.status(500).send('email format not correct it requires "@"')
-    // }
     const job = await Jobmodel.create(req.body)
     res.status(201).json({
         status: true,
@@ -58,8 +57,9 @@ exports.postNewJob = async (req, res, next) => {
    }
 }
 
-//delete Jobs Route
-//  GET  /api/v1/jobs/:id
+//method: DELETE
+//description: delete single job from database with _id
+//route: api/v1/jobs/23435543543645765
 exports.deleteJob = async (req, res, next) => {
     try {
         const job = await Jobmodel.findByIdAndDelete(req.params.id)
@@ -76,20 +76,22 @@ exports.deleteJob = async (req, res, next) => {
         });
        } catch (err) {
           res.status(404).json({
-              data: err.data,
+              data: err,
               msg: "the requestd rosource was not found!"
           })
        }
    }
 
+
+   //method: PUT
+//description: edit single job from database with _id
+//route: api/v1/jobs/23435543543645765
 exports.updateJob = async(req, res, next) => {
     try {
         const job = await Jobmodel.findByIdAndUpdate(req.params.id)
 
-        
      if (!job){
-        return res.status(400).json({status: "Failed!",
-                                       success: false})
+        return res.status(400).json({status: "Failed!", success: false})
     }
 
         res.status(200 ).json({
@@ -99,7 +101,7 @@ exports.updateJob = async(req, res, next) => {
        } catch (err) {
           res.status(404).json({
               data: err.data,
-              msg: "the requestd rosource was not found!"
+              msg: "the requested rosource was not found!"
           })
        }
 }

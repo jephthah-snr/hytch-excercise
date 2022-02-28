@@ -14,8 +14,8 @@ connectDb()
 app.use(express.json())
 
 
-app.use('/api/v1/', jobRoutes)
-app.use('/api/v1/', authRoutes)
+app.use('/api/v1/jobs', jobRoutes)
+app.use('/api/v1/auth', authRoutes)
 
 // function routes(route){
 //     app.use('/api/v1/', route) 
